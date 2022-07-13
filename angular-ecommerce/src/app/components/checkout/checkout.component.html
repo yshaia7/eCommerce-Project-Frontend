@@ -5,7 +5,7 @@
             <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
 
                 <!-- customer form group -->
-                <div formGroupName="customer" class=""form-area>
+                <div formGroupName="customer" class="form-area">
                     <h3>Customer</h3>
 
                     <div class="row">
@@ -38,15 +38,18 @@
                 </div>
 
                 <!-- shipping Address form group -->
-                <div formGroupName="shippingAddress" class=""form-area>
+                <div formGroupName="shippingAddress" class="form-area">
                     <h3>Shipping Address</h3>
 
                     <div class="row">
                         <div class="col-md-2"><label>Country</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
-                              <select formControlName="country">
-                                <option>TO DO</option>
+                              <select formControlName="country" (change)="getStates('shippingAddress')">
+                                 <!-- TODO make some country default in the templet -->
+                                <option *ngFor="let country of countries" [ngValue]="country">
+                                    {{ country.name }}
+                                </option>
                               </select>
                             </div>
                         </div>
@@ -75,7 +78,9 @@
                         <div class="col-md-9">
                             <div class="input-space">
                               <select formControlName="state">
-                                <option>TO DO</option>
+                                <option *ngFor="let state of shippingAddressStates" [ngValue]="state">
+                                    {{state.name}}
+                                </option>
                               </select>
                             </div>
                         </div>
@@ -92,15 +97,18 @@
 
 
                 <!-- billing Address form group -->
-                <div formGroupName="billingAddress" class=""form-area>
+                <div formGroupName="billingAddress" class="form-area">
                     <h3>Building Address</h3>
 
                     <div class="row">
                         <div class="col-md-2"><label>Country</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
-                              <select formControlName="country">
-                                <option>TO DO</option>
+                             <!-- TODO make some country default in the templet -->
+                              <select formControlName="country" (change)="getStates('billingAddress')">
+                                <option *ngFor="let country of countries" [ngValue]="country">
+                                    {{ country.name }}
+                                </option>
                               </select>
                             </div>
                         </div>
@@ -128,9 +136,11 @@
                         <div class="col-md-2"><label>State</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
-                              <select formControlName="state">
-                                <option>TO DO</option>
-                              </select>
+                                <select formControlName="state">
+                                <option *ngFor="let state of billingAddressStates" [ngValue]="state">
+                                    {{state.name}}
+                                </option>
+                            </select>
                             </div>
                         </div>
                     </div>
