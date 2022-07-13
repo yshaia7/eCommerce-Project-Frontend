@@ -89,6 +89,7 @@ export class CheckoutComponent implements OnInit {
     console.log("The email is: " +this.checkoutFormGroup.get('customer')?.value.email);
   }
 
+
   handleMonthsAndYears(){
 
     const creditCardFormGroup = this.checkoutFormGroup.get('creditCard');
@@ -113,6 +114,5 @@ export class CheckoutComponent implements OnInit {
     );
   }
 }
-
 
 
