@@ -5,9 +5,14 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Country } from 'src/app/common/country';
+import { Order } from 'src/app/common/order';
+import { OrderItem } from 'src/app/common/order-item';
+import { Purchase } from 'src/app/common/purchase';
 import { State } from 'src/app/common/state';
 import { CartService } from 'src/app/services/cart.service';
+import { CheckoutService } from 'src/app/services/checkout.service';
 import { Luv2ShopFormService } from 'src/app/services/luv2-shop-form.service';
 import { Luv2ShopValidators } from 'src/app/validators/luv2-shop-validators';
 
@@ -34,7 +39,9 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private luv2ShopFormService: Luv2ShopFormService,
-    private cartService: CartService
+    private cartService: CartService,
+    private checkoutService: CheckoutService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -197,8 +204,83 @@ export class CheckoutComponent implements OnInit {
 
     if (this.checkoutFormGroup.invalid) {
       this.checkoutFormGroup.markAllAsTouched();
+      return;
     }
 
+    this.logs();
+    
+    // Set up order
+    let order = new Order();
+    order.totalPrice = this.totalPrice;
+    order.totalQuantity = this.totalQuantity;
+
+    // Get cart items
+    const cartItems = this.cartService.cartItems;
+
+    // Create orderItems from cartItems
+    // - long way
+     //let orderItems: OrderItem[] = [];
+    // for(let i=0; i < cartItem.length; i++){
+    //   orderItems[i] = new OrderItem(cartItem[i]);
+    // }
+
+    let orderItems: OrderItem[] = cartItems.map(tempCartItem => new OrderItem(tempCartItem));
+
+    // Set up purchase
+    let purchase = new Purchase();
+
+    // Populate purchase - customer
+    purchase.customer = this.checkoutFormGroup.controls['customer'].value;
+
+    // Populate purchase - shipping address
+    purchase.shippingAddress = this.checkoutFormGroup.controls['shippingAddress'].value; 
+    const shippingAddress: State = JSON.parse(JSON.stringify(purchase.shippingAddress.state));
+    const shippingCountry: Country = JSON.parse(JSON.stringify(purchase.shippingAddress.country));
+    purchase.shippingAddress.state = shippingAddress.name;
+    purchase.shippingAddress.country = shippingCountry.name;
+
+    // Populate purchase - billing address
+    purchase.billingAddress = this.checkoutFormGroup.controls['billingAddress'].value; 
+    const billingAddress: State = JSON.parse(JSON.stringify(purchase.billingAddress.state));
+    const billingCountry: Country = JSON.parse(JSON.stringify(purchase.billingAddress.country));
+    purchase.billingAddress.state = billingAddress.name;
+    purchase.billingAddress.country = billingCountry.name;
+
+    // Populate purchase - order and orderItems
+    purchase.order = order;
+    purchase.orderItems = orderItems;
+
+    // Call REST API via the checkoutService
+    this.checkoutService.placeOrder(purchase).subscribe({
+      next: response => {
+        alert(`Your order has been recived\nOrder tracking number: ${response.orderTrackingNumber}`);
+        
+        // reset cart
+        this.restCart();
+      },
+      error: err =>{
+        alert(`There was an error: ${err.message}`)
+      }
+    }
+    );
+
+  }
+
+  restCart() {
+
+    // rest cart data
+    this.cartService.cartItems = [];
+    this.cartService.totalPrice.next(0);
+    this.cartService.totalQuantity.next(0);
+
+    // rest the form
+    this.checkoutFormGroup.reset();
+
+    // navigate back to the product page
+    this.router.navigateByUrl("/products")
+  }
+
+  logs(){
     console.log(this.checkoutFormGroup.get('customer')?.value);
     console.log(
       'The email is: ' + this.checkoutFormGroup.get('customer')?.value.email
@@ -213,7 +295,6 @@ export class CheckoutComponent implements OnInit {
         this.checkoutFormGroup.get('shippingAddress')?.value.state.name
     );
   }
-
   handleMonthsAndYears() {
     const creditCardFormGroup = this.checkoutFormGroup.get('creditCard');
 
