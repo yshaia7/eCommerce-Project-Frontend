@@ -1,9 +1,12 @@
 <div class="login-status-header">
   <div class="login-status-user-info">
+    <div class="container">
+        <div class="row">
+            <div class="col">
     <button *ngIf="!isAuthenticated" routerLink="/login" class="au-btn-submit">
       Login
     </button>
-    <div class="row">
+</div>
       <div class="col">
         <div *ngIf="isAuthenticated">Welcome</div>
       </div>
@@ -15,7 +18,11 @@
         >
           Logout
         </button>
+        
       </div>
+      <div class="col">
+        <button  *ngIf="isAuthenticated" routerLink="/members" class="au-btn-submit">Member</button></div>
     </div>
+</div>
   </div>
 </div>

@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
 
   // Todo create sql tables for user, passowrd token for validation  
   // Todo bring info from DB to check if user exists
+  // TODO need to add relevent error message if password input is incorrect
   submitted = false;
   tempPassword: number = 123456;
   user = {
@@ -42,7 +43,7 @@ export class LoginComponent implements OnInit {
       this.form?.reset();
       this.loginService.setAuthenticated(true);
       console.log('this.loginService.setAuthenticated(true)');
-       this.router.navigate(['products'], {queryParams: {username: this.user.email}})
+       this.router.navigate(['products'])
     }
     
     // relative rout is rebundant, only example
