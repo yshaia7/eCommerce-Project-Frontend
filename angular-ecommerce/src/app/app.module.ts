@@ -16,11 +16,17 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
+
 import { LoginStatusComponent } from './components/login-status/login-status.component';
+import { RegisterComponent } from './components/register/register.component';
+import { MembersPageComponent } from './components/members-page/members-page.component';
+import { AuthGuardService } from './services/auth-guard.service';
 
 
 const routes: Routes = [
+  { path: 'members', component: MembersPageComponent, canActivate: [AuthGuardService]  },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'cart-details', component: CartDetailsComponent },
   { path: 'products/:id', component: ProductDetailsComponent },
@@ -44,6 +50,10 @@ const routes: Routes = [
     CheckoutComponent,
     LoginComponent,
     LoginStatusComponent,
+    RegisterComponent,
+    MembersPageComponent
+    
+
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -52,7 +62,6 @@ const routes: Routes = [
     NgbModule,
     ReactiveFormsModule,
     FormsModule
-    // OktaAuthModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent],

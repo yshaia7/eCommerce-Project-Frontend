@@ -13,8 +13,8 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class LoginStatusComponent implements OnInit {
   
-  isAuthenticated: Subject<boolean> = new BehaviorSubject<boolean>(true);
-  
+  isAuthenticated: Subject<boolean> = new BehaviorSubject<boolean>(false);
+  auth: boolean = false;
   userFullName: string | undefined;
 
               constructor(private loginService: LoginService,
@@ -37,6 +37,9 @@ export class LoginStatusComponent implements OnInit {
     //   }
     // )
   }
+
+
+  
   getUserDetails() {
     if(this.isAuthenticated){
 
@@ -52,7 +55,6 @@ export class LoginStatusComponent implements OnInit {
   }
 
   logout(){
-  
     this.loginService.setAuthenticated(false);
     this.router.navigate(['login']);
   }

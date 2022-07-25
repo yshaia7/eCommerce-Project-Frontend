@@ -1,12 +1,11 @@
-
-  
   <div class="main-content">
     <div class="section-content section-content-p30">
       <div class="container-fluid">
         <div class="row">
   
-    <h1>Login page</h1>
+    <h1>Registeration page</h1>
   
+
     <div class="container">
       <div class="row">
         <div
@@ -19,12 +18,12 @@
               #userData="ngModelGroup"
             >
               <div class="form-group">
-                <label for="email">email</label>
+                <label for="email">Email</label>
                 <input
                   type="text"
                   id="email"
                   class="form-control"
-                  [ngModel]="user.email"
+                  ngModel
                   name="email"
                   required
                   email
@@ -33,7 +32,7 @@
                 <span
                   class="help-block"
                   *ngIf="email.invalid && email.touched"
-                  >Please enter vali email</span
+                  >Wrong email</span
                 >
               </div>
               <div class="form-group">
@@ -42,7 +41,7 @@
                   type="password"
                   id="empasswordail"
                   class="form-control"
-                  [ngModel]="user.password"
+                  ngModel
                   name="password"
                   required
                   password
@@ -50,34 +49,31 @@
                 />
                 <span
                   class="help-block"
-                  *ngIf="!password.valid && password.touched" 
-                  > The password is: 123456</span
+                  *ngIf="!password.valid && password.touched"
+                  >Wrong password</span
                 >
               </div>
             </div>
-            <p *ngIf="!userData.valid && userData.touched">
-              Please enter valid input
-            </p>
-            <hr />
-            <button class="btn btn-primary" type="submit" [disabled]="!f.valid">
-              SignIn
+              <span
+                  class="help-block"
+                  *ngIf="!userData.valid && userData.touched"
+                  >Input not valid</span>
+                  <hr>
+                  <div class="btn">
+            <button
+              class="btn btn-primary"
+              type="submit"
+              [disabled]="!f.valid"
+            >Register
             </button>
+            
+            <button class="btn btn-primary" id="loginRegisterBtn" routerLink="/login" style="margin-left: 1em">Login</button></div>
           </form>
         </div>
       </div>
-      <div class="row" *ngIf="submitted">
-        <div class="col-xs-12">
-          <h3>Your Data</h3>
-          <p>UserName: {{ user.email }}</p>
-          <p>Password: {{ user.password }}</p>
-        </div>
-      </div>
-      <hr>
-      <p>Not have an account yet?</p>
-      <button class="btn btn-primary" routerLink="/register">Register</button>
-    </div> 
-</div>
-</div>
-</div>
-</div>
+    </div>
 
+</div>
+</div>
+</div>
+</div>
