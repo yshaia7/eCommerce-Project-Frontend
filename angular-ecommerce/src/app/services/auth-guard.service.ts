@@ -5,22 +5,26 @@ import {
   CanActivate,
   CanActivateChild,
   Router,
-  RouterStateSnapshot
-} from "@angular/router";
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+  RouterStateSnapshot,
+} from '@angular/router';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { LoginService } from './login.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class AuthGuardService implements CanActivate{
-  
-  constructor(private loginService: LoginService) { }
+export class AuthGuardService implements CanActivate {
+  constructor(private loginService: LoginService,
+            private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot):  Observable<any> {
-   return this.loginService.isAuthenticated();    
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<any> {
+    //TODO fix condition, its allways true
+    if (this.loginService.isAuthenticated()) 
+          return of(true);
+    this.router.navigate(['login']);
+    return of(false);
   }
 }
-
-

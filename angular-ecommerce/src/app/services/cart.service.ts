@@ -16,13 +16,13 @@ export class CartService {
   constructor() {
 
     // read data from storage
-    let data = JSON.parse(this.storage.getItem('cartItems') || '{}');
+    // let data = JSON.parse(this.storage.getItem('cartItems') || '{}');
 
-    if(data == '{}')
-      this.cartItems= [];
-    else if( data != null){
-      this.cartItems = data;
-    }
+    // if(data == '{}')
+    //   this.cartItems= [];
+    // else 
+    //   this.cartItems = data;
+    
 
     // compute totals based on the data that is read from storage
     this.computeCartTotals();

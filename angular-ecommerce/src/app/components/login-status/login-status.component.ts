@@ -16,6 +16,8 @@ export class LoginStatusComponent implements OnInit {
   isAuthenticated: Subject<boolean> = new BehaviorSubject<boolean>(false);
   auth: boolean = false;
   userFullName: string | undefined;
+  
+  storage: Storage = sessionStorage;
 
               constructor(private loginService: LoginService,
                           private router: Router) { }
@@ -51,6 +53,12 @@ export class LoginStatusComponent implements OnInit {
       //     this.userFullName = res?.name;
       //   }
       // )
+
+    // TODO retrive the user's email from the relevant Table
+    const theEmail = "yshaia7@gmail.com";
+
+    // now store the email in browser storage
+    this.storage.setItem('userEmail', JSON.stringify(theEmail));
     }   
   }
 

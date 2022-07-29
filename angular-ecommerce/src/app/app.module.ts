@@ -21,9 +21,11 @@ import { LoginStatusComponent } from './components/login-status/login-status.com
 import { RegisterComponent } from './components/register/register.component';
 import { MembersPageComponent } from './components/members-page/members-page.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { OrderHistoryComponent } from './components/order-history/order-history.component';
 
 
 const routes: Routes = [
+  { path: 'order-history', component: OrderHistoryComponent, canActivate: [AuthGuardService]  },
   { path: 'members', component: MembersPageComponent, canActivate: [AuthGuardService]  },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -51,7 +53,8 @@ const routes: Routes = [
     LoginComponent,
     LoginStatusComponent,
     RegisterComponent,
-    MembersPageComponent
+    MembersPageComponent,
+    OrderHistoryComponent
     
 
   ],

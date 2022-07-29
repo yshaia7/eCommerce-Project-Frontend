@@ -1,28 +1,27 @@
 <div class="login-status-header">
   <div class="login-status-user-info">
     <div class="container">
-        <div class="row">
-            <div class="col">
-    <button *ngIf="!isAuthenticated" routerLink="/login" class="au-btn-submit">
-      Login
-    </button>
-</div>
-      <div class="col">
-        <div *ngIf="isAuthenticated">Welcome</div>
-      </div>
-      <div class="col">
-        <button
-          *ngIf="isAuthenticated"
-          (click)="logout()"
-          class="au-btn-submit"
-        >
-          Logout
-        </button>
-        
-      </div>
-      <div class="col">
-        <button  *ngIf="isAuthenticated" routerLink="/members" class="au-btn-submit">Member</button></div>
+       
+<!--       
+    <div *ngIf="isAuthenticated" class="login-status-user-info">
+        Welcome back
+    </div>      
+     -->
+
+    <!-- <div *ngIf="isAuthenticated && userFullName" class="login-status-user-info">
+        Welcome back {{ userFullName }}!
+    </div> -->
+        <button *ngIf="!isAuthenticated" routerLink="/login" class="au-btn-submit">Login </button>
+      
+        <button *ngIf="isAuthenticated" (click)="logout()" class="au-btn-submit" > Logout </button>   
+            
+        <button  *ngIf="isAuthenticated" routerLink="/members" class="au-btn-submit">Member</button>
+    
+        <button  *ngIf="isAuthenticated" routerLink="/order-history" class="au-btn-submit">Order</button>
+
+
     </div>
+    
 </div>
   </div>
-</div>
+
