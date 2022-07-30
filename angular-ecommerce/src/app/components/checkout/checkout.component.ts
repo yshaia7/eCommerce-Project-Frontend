@@ -51,7 +51,6 @@ export class CheckoutComponent implements OnInit {
 
     // Todo last watch video in folder 30
     const theEmail = JSON.parse(this.storage.getItem('userEmail') || '{}');
-    
 
     // Todo need to extract to other function for clean the ngOnInit
     // Todo: after finish the project modify that duplication code
@@ -68,7 +67,7 @@ export class CheckoutComponent implements OnInit {
           Luv2ShopValidators.notOnlyWhitspace,
         ]),
         // email: new FormControl(theEmail, [ check line 53 with the video 30
-          email: new FormControl('', [
+        email: new FormControl('', [
           Validators.required,
           Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
         ]),
