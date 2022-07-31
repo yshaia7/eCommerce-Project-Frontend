@@ -13,12 +13,12 @@
                                         <label for="email">Email</label>
                                         <input type="text" id="email" class="form-control" ngModel name="email" required email #email="ngModel" />
                                         <span class="help-block" *ngIf="email.invalid && email.touched">Please enter valid email</span>
+                                        <span class="help-block" *ngIf="emailErrorMsg != '' && email.untouched && !email.dirty">{{emailErrorMsg}}</span>
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Password</label>
                                         <input type="password" id="password" class="form-control" ngModel name="password" required password #password="ngModel"/>
-                                        <span class="help-block" *ngIf="!password.valid && password.touched">
-                                            The password is: 123456</span>
+                                            <span class="help-block" *ngIf="passwordErrorMsg != '' && password.untouched && !email.dirty">{{passwordErrorMsg}}</span>
                                     </div>
                                 <hr/>
                                 <button class="btn btn-success" type="submit" [disabled]="!f.valid"> SignIn</button>

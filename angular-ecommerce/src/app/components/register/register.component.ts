@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
 
   registration: Registration = new Registration();
   register: Register = new Register();
-
+  statusMsgFromServer?: boolean;
   registretionStatus: string = '';
 
   constructor(private registerService: RegisterService,
@@ -24,17 +24,15 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {}
 
   // TODO fix - every second click on register button fall inside if and redirect 
-  validateRegistration() {
-    this.form?.reset();
-    if(Number(this.registretionStatus.length) > 0){
-        console.log("inside if")
-        this.router.navigateByUrl('/login');
-    }
-    else{  
-      console.log("inside else")
-      this.registretionStatus = '';
-      console.log(this.registretionStatus);
-    }
+  validateRegistration(msg: string) {
+    
+    console.log("this.registretionStatus: " + this.registretionStatus);
+    console.log("this.registretionStatus: " + this.registretionStatus.length);
+    this.statusMsgFromServer = (this.registretionStatus.length == 0);
+    console.log('this.statusMsgFromServer: '  + this.statusMsgFromServer);
+    console.log(this.statusMsgFromServer);
+
+   
 
   }
 
@@ -48,11 +46,15 @@ export class RegisterComponent implements OnInit {
     this.registerService.addnewRegister(this.registration).subscribe(
       data => { 
         this.registretionStatus = data.msg;
-        console.log("this.registretionStatus: " + this.registretionStatus);
-        console.log("this.registretionStatus: " + this.registretionStatus.length);
+
+        this.form?.reset();
+    
+        if(this.registretionStatus.length == 0){
+          this.router.navigateByUrl('/login');
+        }
+
       }
     );
-    this.validateRegistration();
   }
 
 }
