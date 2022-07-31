@@ -17,17 +17,13 @@ export class RegisterComponent implements OnInit {
   register: Register = new Register();
 
   registretionStatus: string = '';
-  //emailErrorMsgFromTheServer = '';
-  // TODO store user details in new DB Tables
-
-  submitted: boolean = false;
 
   constructor(private registerService: RegisterService,
               private router: Router) {}
 
   ngOnInit(): void {}
 
-  // fix - every second click on register button fall inside if
+  // TODO fix - every second click on register button fall inside if and redirect 
   validateRegistration() {
     this.form?.reset();
     if(Number(this.registretionStatus.length) > 0){

@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Register } from 'src/app/common/register';
+import { Registration } from 'src/app/common/registration';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({
@@ -17,46 +19,41 @@ export class LoginComponent implements OnInit {
 
   @ViewChild('f') form: NgForm | undefined;
 
-  // Todo create sql tables for user, passowrd token for validation  
-  // Todo bring info from DB to check if user exists
-  // TODO need to add relevent error message if password input is incorrect
-  submitted = false;
-  tempPassword: number = 123456;
-  user = {
-    email: '',
-    password: '',
-    loginShare: ''
-  }
+  registration: Registration = new Registration();
+  register: Register = new Register();
+  
+  registrationServerResponse: Registration = new Registration();
 
-  questionAnswer = '';
+  // TODO need to add relevent error message if password input is incorrect
+  
   ngOnInit(): void {
-    // initilaize Email get from register component
-    // this.user.email = this.route.snapshot.queryParams['email'];
-    // this.user.password = this.route.snapshot.queryParams['password'];
+    
     
   }
 
   onSubmit() {
 
-    if(this.tempPassword == this.form?.value.userData.password){
+    this.register.email = this.form?.value.email;
+    this.register.password = this.form?.value.password;
+
+
+    this.registration.register = this.register;
+    
+    this.loginService.loginUser(this.registration).subscribe(
+      data => {
+       this.registrationServerResponse = data;
+      }
+    )
+
+    if( this.registrationServerResponse?.register?.password == this.form?.value.password){
       console.log('rest data');
       this.form?.reset();
       this.loginService.setAuthenticated(true);
       console.log('this.loginService.setAuthenticated(true)');
+      // TODO change it to navigateByUrl
        this.router.navigate(['products'])
-    }
-    
-    // relative rout is rebundant, only example
-    //this.router.navigate(['table'], { relativeTo: this.route });
-    //this.auth.login();
-    //this.router.navigate(['table'], {queryParams: {username: this.user.email}});
+    } 
+    else
+      console.log(this.registrationServerResponse);
   }
-
-  // copyUsersDetail() {
-  //   this.submitted = true;
-  //   this.user.email = this.form?.value.userData.email;
-  //   this.user.password = this.form?.value.userData.password;
-  //   this.user.loginShare = this.form?.value.questionAnswer;
-  // }
-
 }

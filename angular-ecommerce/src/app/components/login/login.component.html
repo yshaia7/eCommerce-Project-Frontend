@@ -1,83 +1,35 @@
-
-  
-  <div class="main-content">
+<div class="main-content">
     <div class="section-content section-content-p30">
-      <div class="container-fluid">
-        <div class="row">
-  
-    <h1>Login page</h1>
-  
-    <div class="container">
-      <div class="row">
-        <div
-          class="col-xs-12 col-sm-10 col-md-8 com-sm-offset-1 col-md-offset-2"
-        >
-          <form (ngSubmit)="onSubmit()" #f="ngForm">
-            <div
-              id="user-data"
-              ngModelGroup="userData"
-              #userData="ngModelGroup"
-            >
-              <div class="form-group">
-                <label for="email">email</label>
-                <input
-                  type="text"
-                  id="email"
-                  class="form-control"
-                  [ngModel]="user.email"
-                  name="email"
-                  required
-                  email
-                  #email="ngModel"
-                />
-                <span
-                  class="help-block"
-                  *ngIf="email.invalid && email.touched"
-                  >Please enter vali email</span
-                >
-              </div>
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input
-                  type="password"
-                  id="empasswordail"
-                  class="form-control"
-                  [ngModel]="user.password"
-                  name="password"
-                  required
-                  password
-                  #password="ngModel"
-                />
-                <span
-                  class="help-block"
-                  *ngIf="!password.valid && password.touched" 
-                  > The password is: 123456</span
-                >
-              </div>
-            </div>
-            <p *ngIf="!userData.valid && userData.touched">
-              Please enter valid input
-            </p>
-            <hr />
-            <button class="btn btn-primary" type="submit" [disabled]="!f.valid">
-              SignIn
-            </button>
-          </form>
-        </div>
-      </div>
-      <div class="row" *ngIf="submitted">
-        <div class="col-xs-12">
-          <h3>Your Data</h3>
-          <p>UserName: {{ user.email }}</p>
-          <p>Password: {{ user.password }}</p>
-        </div>
-      </div>
-      <hr>
-      <p>Not have an account yet?</p>
-      <button class="btn btn-primary" routerLink="/register">Register</button>
-    </div> 
-</div>
-</div>
-</div>
-</div>
+        <div class="container-fluid">
+            <div class="row">
 
+                <h1>Login page</h1>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-10 col-md-8 com-sm-offset-1 col-md-offset-2">
+                            <form (ngSubmit)="onSubmit()" #f="ngForm">
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="text" id="email" class="form-control" ngModel name="email" required email #email="ngModel" />
+                                        <span class="help-block" *ngIf="email.invalid && email.touched">Please enter valid email</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input type="password" id="password" class="form-control" ngModel name="password" required password #password="ngModel"/>
+                                        <span class="help-block" *ngIf="!password.valid && password.touched">
+                                            The password is: 123456</span>
+                                    </div>
+                                <hr/>
+                                <button class="btn btn-success" type="submit" [disabled]="!f.valid"> SignIn</button>
+                            </form>
+                        </div>
+                    </div>
+                    <hr>
+                    <p>Not have an account yet?</p>
+                    <a routerLink="/register"><button class="btn btn-primary" >Register</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

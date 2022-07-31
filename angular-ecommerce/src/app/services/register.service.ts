@@ -18,9 +18,3 @@ export class RegisterService {
   }
 
 }
-
-  // interface GetRegisterResponse{
-  //   _embedded: {
-  //     orders: OrderHistory[];
-  //   }
-  // }
