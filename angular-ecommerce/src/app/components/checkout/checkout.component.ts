@@ -13,6 +13,7 @@ import { Purchase } from 'src/app/common/purchase';
 import { State } from 'src/app/common/state';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
+import { LoginService } from 'src/app/services/login.service';
 import { Luv2ShopFormService } from 'src/app/services/luv2-shop-form.service';
 import { Luv2ShopValidators } from 'src/app/validators/luv2-shop-validators';
 
@@ -32,26 +33,40 @@ export class CheckoutComponent implements OnInit {
 
   countries: Country[] = [];
 
-  // Todo - need to make default state after first component initialization
   shippingAddressStates: State[] = [];
   billingAddressStates: State[] = [];
 
-  storage: Storage = sessionStorage;
+  storage: Storage = localStorage;
+  isAuthenticated: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private luv2ShopFormService: Luv2ShopFormService,
     private cartService: CartService,
     private checkoutService: CheckoutService,
-    private router: Router
+    private router: Router,
+    private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
+
+    this.loginService.isAuthenticated().subscribe(
+      data => {
+        this.isAuthenticated = data;
+        console.log('isAuthenticated status ' + data)
+      }
+    )
     this.reviewCartDetails();
 
-    // Todo last watch video in folder 30
-    const theEmail = JSON.parse(this.storage.getItem('userEmail') || '{}');
+    let theEmail = JSON.parse(this.storage.getItem('userEmail') || '{}');
+    console.log("the storage: " + this.storage.getItem('userEmail'))
     
+    console.log("theEmailObjecct: " + typeof(theEmail));
+    if(theEmail == '{}' ||  !this.isAuthenticated)
+      {
+        theEmail = '';
+        console.log("theEmail: " + theEmail);
+      }
 
     // Todo need to extract to other function for clean the ngOnInit
     // Todo: after finish the project modify that duplication code
@@ -68,7 +83,7 @@ export class CheckoutComponent implements OnInit {
           Luv2ShopValidators.notOnlyWhitspace,
         ]),
         // email: new FormControl(theEmail, [ check line 53 with the video 30
-          email: new FormControl('', [
+          email: new FormControl(theEmail, [
           Validators.required,
           Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
         ]),
@@ -299,8 +314,6 @@ export class CheckoutComponent implements OnInit {
     purchase.order = order;
     purchase.orderItems = orderItems;
 
-    //TODO Create new table and store all the information in one row
-
     // Call REST API via the checkoutService
     this.checkoutService.placeOrder(purchase).subscribe({
       next: (response) => {
@@ -368,6 +381,14 @@ export class CheckoutComponent implements OnInit {
         this.creditCardMonth = data;
       });
   }
+
+  countryselectedClicked(formGroupName: string){
+    const formGroup = this.checkoutFormGroup.get(formGroupName);
+    console.log('countrySelectedClicked' + formGroup?.get('country')?.value.length);
+
+    return formGroup?.get('country')?.value.length == 0;
+  }
+
   getStates(formGroupName: string) {
     const formGroup = this.checkoutFormGroup.get(formGroupName);
 

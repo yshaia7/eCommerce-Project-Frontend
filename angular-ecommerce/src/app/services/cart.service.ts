@@ -20,10 +20,6 @@ export class CartService {
 
     if(data != '{}')
       this.cartItems = data;
-    // else 
-    //   this.cartItems = data;
-    
-    console.log("this.cartItems session: " + this.cartItems)
     
     // compute totals based on the data that is read from storage
     this.computeCartTotals();

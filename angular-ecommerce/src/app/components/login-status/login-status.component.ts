@@ -14,7 +14,6 @@ import { LoginService } from 'src/app/services/login.service';
 export class LoginStatusComponent implements OnInit {
   
   isAuthenticated: Subject<boolean> = new BehaviorSubject<boolean>(false);
-  auth: boolean = false;
   userFullName: string | undefined;
   
   storage: Storage = sessionStorage;
@@ -44,7 +43,7 @@ export class LoginStatusComponent implements OnInit {
   
   getUserDetails() {
     if(this.isAuthenticated){
-
+// TODO - bring user name from DB and diplay in the status
       // Fetch the logger in user details (user claims)
       //
       // user full name is exposed as a property name
@@ -54,15 +53,11 @@ export class LoginStatusComponent implements OnInit {
       //   }
       // )
 
-    // TODO retrive the user's email from the relevant Table
-    const theEmail = "yshaia7@gmail.com";
-
-    // now store the email in browser storage
-    this.storage.setItem('userEmail', JSON.stringify(theEmail));
     }   
   }
 
   logout(){
+    localStorage.removeItem('userEmail');
     this.loginService.setAuthenticated(false);
     this.router.navigate(['login']);
   }

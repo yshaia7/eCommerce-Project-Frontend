@@ -27,12 +27,9 @@ export class LoginComponent implements OnInit {
 
   registrationServerResponse: Registration = new Registration();
 
-  // TODO need to add relevent error message if password input is incorrect
+    storage: Storage = localStorage;
   
-  ngOnInit(): void {
-    
-    
-  }
+  ngOnInit(): void { }
 
   onSubmit() {
 
@@ -49,6 +46,10 @@ export class LoginComponent implements OnInit {
        this.registrationServerResponse = data;
 
        if( this.registrationServerResponse?.register?.password == this.form?.value.password){
+
+        // store user email in the local storage
+        this.storage.setItem('userEmail', JSON.stringify(this.form?.value.email));
+        
         console.log('rest data');
         
         this.loginService.setAuthenticated(true);
