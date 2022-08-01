@@ -20,7 +20,7 @@ export class CartService {
 
     if(data != '{}')
       this.cartItems = data;
-    
+
     // compute totals based on the data that is read from storage
     this.computeCartTotals();
   }
