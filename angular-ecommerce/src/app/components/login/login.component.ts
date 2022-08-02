@@ -47,15 +47,16 @@ export class LoginComponent implements OnInit {
 
        if( this.registrationServerResponse?.register?.password == this.form?.value.password){
 
+        // TODO add the user to the local storage if loged in
+        // TODO currently load the browser logout the user
+        
         // store user email in the local storage
         this.storage.setItem('userEmail', JSON.stringify(this.form?.value.email));
         
-        console.log('rest data');
-        
+        // mark user as login for canActivate and status bar 
         this.loginService.setAuthenticated(true);
-        console.log('this.loginService.setAuthenticated(true)');
-        // TODO change it to navigateByUrl
-         this.router.navigate(['products'])
+
+         this.router.navigateByUrl('/products')
       } 
       else
         if(this.registrationServerResponse.register == null){

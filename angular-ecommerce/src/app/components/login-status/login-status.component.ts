@@ -29,7 +29,7 @@ export class LoginStatusComponent implements OnInit {
         console.log('isAuthenticated status ' + data)
       }
     )
-
+    
     // Subscribe to authentication state changes
     // this.oktaAuthService.$authenticationState.subscribe(
     //   (result) => {

@@ -23,7 +23,6 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // TODO fix - every second click on register button fall inside if and redirect 
   validateRegistration(msg: string) {
     
     console.log("this.registretionStatus: " + this.registretionStatus);
