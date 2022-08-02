@@ -83,6 +83,7 @@
                             <div class="input-space">
                               <select formControlName="country" (change)="getStates('shippingAddress')">
                                  <!-- TODO make some country default in the templet -->
+                                 <!-- will solve also the error in states select list, when try to choose state while county didnt selected -->
                                 <option *ngFor="let country of countries" [ngValue]="country">
                                     {{ country.name }}
                                 </option>
@@ -345,7 +346,7 @@
                             </div>
                         </div>
                     </div>
-
+                </div>
                     <div class="row">
                         <div class="col-md-2"><label>Secuirty Code</label></div>
                         <div class="col-md-9">
@@ -362,7 +363,7 @@
                             </div>
                             </div>
                         </div>
-                    </div>
+          
 
                     <div class="row">
                         <div class="col-md-2"><label>Expiration Month</label></div>

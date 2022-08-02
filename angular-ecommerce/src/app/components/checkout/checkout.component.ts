@@ -382,17 +382,9 @@ export class CheckoutComponent implements OnInit {
       });
   }
 
-  countryselectedClicked(formGroupName: string){
-    const formGroup = this.checkoutFormGroup.get(formGroupName);
-    console.log('countrySelectedClicked' + formGroup?.get('country')?.value.length);
-
-    return formGroup?.get('country')?.value.length == 0;
-  }
-
   getStates(formGroupName: string) {
     const formGroup = this.checkoutFormGroup.get(formGroupName);
 
-    // TODO error with country states
     const countryCode = formGroup?.value.country.code;
     const countryName = formGroup?.value.country.name;
 

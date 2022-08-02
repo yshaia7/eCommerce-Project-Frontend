@@ -17,6 +17,12 @@ export class LoginService{
   isAuthenticated(): Observable<any> {
     return this.authenticated;
   }
+
+  isAuthenticatedGuard(){
+    if(this.authenticated.getValue())
+      return true;
+    return false;
+  }
         
   setAuthenticated(authStatus: boolean) {
     if (authStatus) 

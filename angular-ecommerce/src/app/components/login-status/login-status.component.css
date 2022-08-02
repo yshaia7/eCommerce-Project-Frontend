@@ -45,6 +45,15 @@
   transition:all .5s ease
 }
 
+.container{
+  display: flex;
+
+}
+
+.col{
+  display: flex;
+  flex-direction: column;
+}
 
 
 

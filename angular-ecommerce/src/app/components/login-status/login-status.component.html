@@ -1,16 +1,10 @@
 <div class="login-status-header">
+    <div *ngIf="isAuthenticated" class="login-status-user-info">Welcome back {{ userFullName }}</div>
   <div class="login-status-user-info">
     <div class="container">
        
-<!--       
-    <div *ngIf="isAuthenticated" class="login-status-user-info">
-        Welcome back
-    </div>      
-     -->
-
-    <!-- <div *ngIf="isAuthenticated && userFullName" class="login-status-user-info">
-        Welcome back {{ userFullName }}!
-    </div> -->
+     <!-- <div *ngIf="isAuthenticated" class="login-status-user-info"> -->
+        
         <button *ngIf="!isAuthenticated" routerLink="/login" class="au-btn-submit">Login </button>
       
         <button *ngIf="isAuthenticated" (click)="logout()" class="au-btn-submit" > Logout </button>   
@@ -19,9 +13,9 @@
     
         <button  *ngIf="isAuthenticated" routerLink="/order-history" class="au-btn-submit">Order</button>
 
-
+    </div>
     </div>
     
 </div>
-  </div>
+
 
