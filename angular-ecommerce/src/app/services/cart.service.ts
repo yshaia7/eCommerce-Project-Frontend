@@ -15,14 +15,15 @@ export class CartService {
  
   constructor() {
 
+    // todo need to fix the condition, it fall if cartItem doesent exist in the localstorage
     // read data from storage
-     let data = JSON.parse(this.storage.getItem('cartItems') || '{}');
+    //  let data = JSON.parse(this.storage.getItem('cartItems') || '{}');
 
-    if(data != '{}')
-      this.cartItems = data;
+    // if(data != '{}')
+    //   this.cartItems = data;
 
     // compute totals based on the data that is read from storage
-    this.computeCartTotals();
+    //this.computeCartTotals();
   }
 
   addToCart(theCartItem: CartItem) {
