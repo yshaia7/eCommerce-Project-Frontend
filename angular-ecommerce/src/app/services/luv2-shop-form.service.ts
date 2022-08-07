@@ -5,7 +5,10 @@ import { Country } from '../common/country';
 import {map} from 'rxjs/operators';
 import { State } from '../common/state';
 import { AppConsts } from '../common/app-consts';
+<<<<<<< HEAD
 import { GetResponseCountries, GetResponseStates } from '../common/app-interfaces';
+=======
+>>>>>>> fab866f3ff276d80c3e112b48cd2d6850a7f4022
 
 @Injectable({
   providedIn: 'root'
