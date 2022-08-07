@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OrderHistory } from '../common/order-history';
+import { GetResponseOrderHistory } from '../common/app-interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +20,4 @@ export class OrderHistoryService {
   }
 
 
-}
-
-interface GetResponseOrderHistory{
-  _embedded: {
-    orders: OrderHistory[];
-  }
 }

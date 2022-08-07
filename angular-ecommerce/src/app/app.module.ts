@@ -37,7 +37,7 @@ const routes: Routes = [
   { path: 'category', component: ProductListComponent },
   { path: 'products', component: ProductListComponent },
   { path: '', redirectTo: '/products', pathMatch: 'full' },
-  { path: '**', redirectTo: '/products', pathMatch: 'full' }, //Todo - page not found
+  { path: '**', redirectTo: '/products', pathMatch: 'full' },
 ];
 
 @NgModule({

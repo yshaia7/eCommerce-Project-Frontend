@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Register } from 'src/app/common/register';
+import { Registration } from 'src/app/common/registration';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({
@@ -17,46 +19,60 @@ export class LoginComponent implements OnInit {
 
   @ViewChild('f') form: NgForm | undefined;
 
-  // Todo create sql tables for user, passowrd token for validation  
-  // Todo bring info from DB to check if user exists
-  // TODO need to add relevent error message if password input is incorrect
-  submitted = false;
-  tempPassword: number = 123456;
-  user = {
-    email: '',
-    password: '',
-    loginShare: ''
-  }
+  registration: Registration = new Registration();
+  register: Register = new Register();
+  
+  emailErrorMsg: string = '';
+  passwordErrorMsg: string = '';
 
-  questionAnswer = '';
-  ngOnInit(): void {
-    // initilaize Email get from register component
-    // this.user.email = this.route.snapshot.queryParams['email'];
-    // this.user.password = this.route.snapshot.queryParams['password'];
-    
-  }
+  registrationServerResponse: Registration = new Registration();
+
+    storage: Storage = localStorage;
+  
+  ngOnInit(): void { }
 
   onSubmit() {
 
-    if(this.tempPassword == this.form?.value.userData.password){
-      console.log('rest data');
-      this.form?.reset();
-      this.loginService.setAuthenticated(true);
-      console.log('this.loginService.setAuthenticated(true)');
-       this.router.navigate(['products'])
-    }
+    this.register.email = this.form?.value.email;
+    this.register.password = this.form?.value.password;
+
+    this.emailErrorMsg = '';
+    this.passwordErrorMsg = '';
+
+    this.registration.register = this.register;
     
-    // relative rout is rebundant, only example
-    //this.router.navigate(['table'], { relativeTo: this.route });
-    //this.auth.login();
-    //this.router.navigate(['table'], {queryParams: {username: this.user.email}});
+    this.loginService.loginUser(this.registration).subscribe(
+      data => {
+       this.registrationServerResponse = data;
+
+       if( this.registrationServerResponse?.register?.password == this.form?.value.password){
+
+        // TODO add the user to the local storage if loged in
+        // TODO currently load the browser logout the user
+        
+        // store user email in the local storage
+        this.storage.setItem('userEmail', JSON.stringify(this.form?.value.email));
+        
+        // mark user as login for canActivate and status bar 
+        this.loginService.setAuthenticated(true);
+
+         this.router.navigateByUrl('/products')
+      } 
+      else
+        if(this.registrationServerResponse.register == null){
+          this.emailErrorMsg = data.msg;
+        }else{
+          this.passwordErrorMsg = data.msg;
+        }
+        // TODO - reset the form only if email doesnt exist
+        // TODO - if email exist and password wrong. rest only the passord
+        this.form?.reset();
+        
+        console.log("this.emailErrorMsg: " + this.emailErrorMsg)
+        console.log("this.passwordErrorMsg: " + this.passwordErrorMsg)
+      }
+    )
+
+ 
   }
-
-  // copyUsersDetail() {
-  //   this.submitted = true;
-  //   this.user.email = this.form?.value.userData.email;
-  //   this.user.password = this.form?.value.userData.password;
-  //   this.user.loginShare = this.form?.value.questionAnswer;
-  // }
-
 }

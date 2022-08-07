@@ -1,44 +1,61 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Register } from 'src/app/common/register';
+import { Registration } from 'src/app/common/registration';
+import { RegisterService } from 'src/app/services/register.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
+  @ViewChild('f') form: NgForm | undefined;
 
+  registration: Registration = new Registration();
+  register: Register = new Register();
+  statusMsgFromServer?: boolean;
+  registretionStatus: string = '';
 
-  // TODO store user details in new DB Tables
-  // TODO need to create the tables first
-  submitted: boolean = false;
-  
-  constructor() { }
+  constructor(private registerService: RegisterService,
+              private router: Router) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  validateRegistration(msg: string) {
+    
+    console.log("this.registretionStatus: " + this.registretionStatus);
+    console.log("this.registretionStatus: " + this.registretionStatus.length);
+    this.statusMsgFromServer = (this.registretionStatus.length == 0);
+    console.log('this.statusMsgFromServer: '  + this.statusMsgFromServer);
+    console.log(this.statusMsgFromServer);
+
+   
+
   }
 
+  onSubmit() {
 
-     LoginUser = {email: '', password: ''};
+    this.register.email = this.form?.value.email;
+    this.register.password = this.form?.value.password;
+    
+    this.registration.register = this.register;
 
-  initializeRegisterDetail(form: NgForm | undefined){
-    // this.loginUser.email = form?.value.userData.email;
-    // this.loginUser.password = form?.value.userData.password;
-    // console.log("initilaize method, login detail ")
-    // console.log(this.loginUser);
-    // return this.loginUser;
-}
+    this.registerService.addnewRegister(this.registration).subscribe(
+      data => { 
+        this.registretionStatus = data.msg;
 
-  getLoginUser(){
-    //return this.loginUser;
-}
+        this.form?.reset();
+    
+        if(this.registretionStatus.length == 0){
+          this.router.navigateByUrl('/login');
+        }
 
-onSubmit(){
-
-}
-
-
-
-
+      }
+    );
+  }
 
 }
+
+
